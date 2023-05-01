@@ -13,12 +13,17 @@ SSH_USER="$USER"@"$SSH_HOST"
 TARGET_PATH="$SSH_USER":/www/"$TARGET"
 
 mkdir ".ssh"
-ssh-keyscan -t rsa "$SSH_HOST" >> ".ssh/known_hosts"
 SSH_PRIVATE_KEY_PATH=".ssh/key"
 SSH_PUBLIC_KEY_PATH=".ssh/key.pub"
-SSH_PRIVATE_KEY_PATH=".ssh/key"
+SSH_KNOWN_HOSTS_PATH=".ssh/known_hosts"
+
+ssh-keyscan -t rsa "$SSH_HOST" >> $SSH_KNOWN_HOSTS_PATH
 echo "$SSH_PRIVATE_KEY" > $SSH_PRIVATE_KEY_PATH
 echo "$SSH_PUBLIC_KEY" > $SSH_PUBLIC_KEY_PATH
+
+chmod 600 $SSH_PRIVATE_KEY_PATH
+chmod 644 $SSH_PUBLIC_KEY_PATH
+chmod 644 $SSH_KNOWN_HOSTS_PATH
 
 echo "$BRANCH" > environment
 
