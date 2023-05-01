@@ -31,4 +31,4 @@ echo "$BRANCH" > environment
 
 rsync -e "ssh -v -p 22 -i $SSH_PRIVATE_KEY_PATH -o UserKnownHostsFile=$SSH_KNOWN_HOSTS_PATH" --delete -a --exclude={".*","robots.txt"} $SOURCE_PATH $TARGET_PATH
 
-ssh  -i $SSH_PRIVATE_KEY_PATH $SSH_USER "cache-purge"
+ssh  -i $SSH_PRIVATE_KEY_PATH -o UserKnownHostsFile=$SSH_KNOWN_HOSTS_PATH $SSH_USER "cache-purge"
