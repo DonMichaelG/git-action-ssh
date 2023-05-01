@@ -13,11 +13,11 @@ SSH_USER="$USER"@"$SSH_HOST"
 TARGET_PATH="$SSH_USER":/www/"$TARGET"
 
 mkdir ".ssh"
-SSH_PRIVATE_KEY_PATH=".ssh/key"
-SSH_PUBLIC_KEY_PATH=".ssh/key.pub"
-SSH_KNOWN_HOSTS_PATH=".ssh/known_hosts"
+SSH_PRIVATE_KEY_PATH="$HOME/.ssh/key"
+SSH_PUBLIC_KEY_PATH="$HOME/.ssh/key.pub"
+SSH_KNOWN_HOSTS_PATH="$HOME/.ssh/known_hosts"
 
-ssh-keyscan -t rsa "$SSH_HOST" >> $SSH_KNOWN_HOSTS_PATH
+ssh-keyscan -t rsa "$SSH_HOST" > $SSH_KNOWN_HOSTS_PATH
 echo "$SSH_PRIVATE_KEY" > $SSH_PRIVATE_KEY_PATH
 echo "$SSH_PUBLIC_KEY" > $SSH_PUBLIC_KEY_PATH
 
