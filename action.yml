@@ -1,0 +1,16 @@
+name: 'Deploy site via ssh'
+description: 'A git action that deploys a site to a server via ssh'
+runs:
+    using: 'docker'
+    image: 'Dockerfile'
+inputs:
+  host: 
+    required: true
+  user:
+    required: true
+  ssh_private_key_path:
+    required: true
+  target:
+    required: true
+  branch:
+    required: true
