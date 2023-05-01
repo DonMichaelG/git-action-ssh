@@ -2,16 +2,26 @@
 
 : ${HOST?Required host not set.}
 : ${USER?Required user not set.}
-: ${SSH_PRIVATE_KEY_PATH?Required secret not set.}
+: ${SSH_PRIVATE_KEY?Required secret not set.}
+: ${SSH_PUBLIC_KEY?Required secret not set.}
 : ${TARGET?Required target path not set.}
 : ${BRANCH?Required branch not set.}
 
 SOURCE_PATH="."
-TARGET_PATH="$USER"@ssh."$HOST":/www/"$TARGET"
+SSH_HOST=ssh."$HOST"
+SSH_USER="$USER"@"$SSH_HOST"
+TARGET_PATH="$SSH_USER":/www/"$TARGET"
 
-echo "$TARGET_PATH"
+mkdir ".ssh"
+ssh-keyscan -t rsa "$SSH_HOST" >> ".ssh/known_hosts"
+SSH_PRIVATE_KEY_PATH=".ssh/key"
+SSH_PUBLIC_KEY_PATH=".ssh/key.pub"
+SSH_PRIVATE_KEY_PATH=".ssh/key"
+echo "$SSH_PRIVATE_KEY" > $SSH_PRIVATE_KEY_PATH
+echo "$SSH_PUBLIC_KEY" > $SSH_PUBLIC_KEY_PATH
+
 echo "$BRANCH" > environment
 
 rsync -e "ssh -v -p 22 -i $SSH_PRIVATE_KEY_PATH" --delete -a --exclude={".*","robots.txt"} $SOURCE_PATH $TARGET_PATH
 
-ssh  -i ../sbif/ssh/sbif stockholmsbif.se@ssh.stockholmsbif.se "cache-purge"
+ssh  -i $SSH_PRIVATE_KEY_PATH $SSH_USER "cache-purge"
