@@ -4,13 +4,13 @@ runs:
     using: 'docker'
     image: 'Dockerfile'
 inputs:
-  host: 
+  HOST: 
     required: true
-  user:
+  USER:
     required: true
-  ssh_private_key_path:
+  SSH_PRIVATE_KEY_PATH:
     required: true
-  target:
+  TARGET:
     required: true
-  branch:
+  BRANCH:
     required: true
