@@ -29,9 +29,8 @@ chmod 644 $SSH_KNOWN_HOSTS_PATH
 
 echo "$BRANCH" > environment
 
-EXCLUDES={".*",".*/",".github",".git",".gitignore"}
-FILTERS={"protect robot.txt","protect .htaccess"}
+EXCLUDES=
 
-rsync -e "ssh -v -p 22 -i $SSH_PRIVATE_KEY_PATH -o UserKnownHostsFile=$SSH_KNOWN_HOSTS_PATH" -a --verbose --delete-excluded --exclude=$EXCLUDES $SOURCE_PATH $TARGET_PATH
+rsync -e "ssh -v -p 22 -i $SSH_PRIVATE_KEY_PATH -o UserKnownHostsFile=$SSH_KNOWN_HOSTS_PATH" --verbose --delete-excluded --exclude=$EXCLUDES --filter="protect robots.txt" --filter="protect .htaccess" -a $SOURCE_PATH $TARGET_PATH
 
 ssh  -i $SSH_PRIVATE_KEY_PATH -o UserKnownHostsFile=$SSH_KNOWN_HOSTS_PATH $SSH_USER "cache-purge"
