@@ -5,7 +5,6 @@
 : ${SSH_PRIVATE_KEY?Required secret not set.}
 : ${SSH_PUBLIC_KEY?Required secret not set.}
 : ${TARGET?Required target path not set.}
-: ${BRANCH?Required branch not set.}
 
 SOURCE_PATH="."
 SSH_HOST=ssh."$HOST"
